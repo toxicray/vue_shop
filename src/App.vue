@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    app根组件
+    123
+    <router-view></router-view>
   </div>
 </template>
 
