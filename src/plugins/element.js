@@ -1,10 +1,8 @@
 /* eslint-disable import/no-duplicates */
 import Vue from 'vue'
-import { Button, Input } from 'element-ui'
-// eslint-disable-next-line import/no-duplicates
-import { Form, FormItem } from 'element-ui'
-import { Message } from 'element-ui'
+import { Button, Input, Form, FormItem, Message } from 'element-ui'
 
+// use也可以支持链式调用
 Vue.use(Button)
 Vue.use(Form)
 Vue.use(FormItem)
