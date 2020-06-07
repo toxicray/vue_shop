@@ -11,35 +11,53 @@
     <!-- 主题区域 -->
     <el-container>
       <!-- 侧边栏区域 -->
-      <el-aside width="200px">
+      <el-aside :width="isClappase? '64px':'200px'">
+        <div class="toggle-button" @click="toggleCollapse">|||</div>
         <el-menu
           background-color="#333744"
           text-color="#fff"
-          active-text-color="#ffd04b"
+          active-text-color="#409EFF"
+          :unique-opened="true"
+          :collapse = "isClappase"
+          :collapse-transition="false"
+          :router="true"
+          :default-active="activePath"
         >
           <!-- 一级菜单 -->
-          <el-submenu index="1">
+          <el-submenu
+            :index="item.id + ''"
+            v-for="item in menuList"
+            :key="item.id"
+          >
             <!-- 一级菜单模板区域 -->
             <template slot="title">
               <!-- 图标 -->
-              <i class="el-icon-location"></i>
+              <i :class="iconsObj[item.id]"></i>
               <!-- 文本 -->
-              <span>导航一</span>
+              <span>{{ item.authName }}</span>
             </template>
-            <el-menu-item index="1-4-1">
+            <el-menu-item
+              :index="'/'+subItem.path+''"
+              v-for="subItem in item.children"
+              :key="subItem.id"
+              @click = "saveNavState('/'+subItem.path+'')"
+            >
               <!-- 一级菜单模板区域 -->
               <template slot="title">
                 <!-- 图标 -->
-                <i class="el-icon-location"></i>
+                <i class="el-icon-menu"></i>
                 <!-- 文本 -->
-                <span>导航一</span>
+                <span>{{ subItem.authName }}</span>
               </template>
             </el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>
       <el-container>
-        <el-main>Main</el-main>
+        <el-main>
+          <router-view>
+          </router-view>
+        </el-main>
         <el-footer>Footer</el-footer>
       </el-container>
     </el-container>
@@ -50,11 +68,21 @@
 export default {
   data() {
     return {
-      menuList: []
+      menuList: [],
+      iconsObj: {
+        125: 'iconfont icon-user',
+        103: 'iconfont icon-tijikongjian',
+        101: 'iconfont icon-shangpin',
+        102: 'iconfont icon-danju',
+        145: 'iconfont icon-baobiao'
+      },
+      isClappase: false,
+      activePath: ''
     }
   },
   created() {
     this.getMenuList()
+    this.activePath = window.sessionStorage.getItem('activePath')
   },
   methods: {
     logout() {
@@ -71,6 +99,14 @@ export default {
         return this.$message.error(res.meta.msg)
       }
       this.menuList = res.data
+    },
+    // 点击切换按钮  切换菜单的折叠
+    toggleCollapse() {
+      this.isClappase = !this.isClappase
+    },
+    saveNavState(activePath) {
+      window.sessionStorage.setItem('activePath', activePath)
+      this.activePath = activePath
     }
   }
 }
@@ -100,9 +136,20 @@ export default {
 
 .el-aside {
   background-color: #333744;
+  border-right: 0;
 }
 
 .el-main {
   background-color: #cccccc;
+}
+
+.toggle-button{
+  background-color:#4A5064;
+  font-size: 10px;
+  line-height: 24px;
+  color: #FFF;
+  letter-spacing: 0.2em;
+  text-align: center;
+  cursor: pointer;
 }
 </style>
