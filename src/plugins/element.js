@@ -17,7 +17,8 @@ import {
   Switch,
   Tooltip,
   Pagination,
-  Dialog
+  Dialog,
+  MessageBox
 } from 'element-ui'
 
 // use也可以支持链式调用
@@ -48,3 +49,4 @@ Vue.use(Dialog)
 
 // 全局的挂载提示框
 Vue.prototype.$message = Message
+Vue.prototype.$confirm = MessageBox.confirm
