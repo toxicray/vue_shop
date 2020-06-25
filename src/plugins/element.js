@@ -18,7 +18,8 @@ import {
   Tooltip,
   Pagination,
   Dialog,
-  MessageBox
+  MessageBox,
+  Tag
 } from 'element-ui'
 
 // use也可以支持链式调用
@@ -46,6 +47,7 @@ Vue.use(Switch)
 Vue.use(Tooltip)
 Vue.use(Pagination)
 Vue.use(Dialog)
+Vue.use(Tag)
 
 // 全局的挂载提示框
 Vue.prototype.$message = Message
